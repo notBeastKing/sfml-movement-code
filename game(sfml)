@@ -1,0 +1,80 @@
+#include<SFML/Graphics.hpp>
+#include<iostream>
+#include<stdio.h>
+
+using namespace std;
+using namespace sf;
+
+int main()
+{
+    RenderWindow windows(VideoMode(1000,1000), "pls move", Style::Default);
+
+    const float speed = 200.f;
+    
+
+     Clock clock;
+
+   Texture texture;
+   texture.loadFromFile("cancer/virus.png");
+   Sprite boy;
+   boy.setTexture(texture);
+   boy.setPosition(500,500);
+
+   windows.setFramerateLimit(10);
+
+    while(windows.isOpen())
+    {
+       Time elapsedtime =  clock.restart();
+
+        Event evnt;
+        while(windows.pollEvent(evnt))
+        {
+            switch(evnt.type)
+            {
+                case Event::Closed:
+                windows.close();
+                break;
+                
+                
+            }
+         }
+
+            if( Keyboard::isKeyPressed(Keyboard::Key::W))
+            {
+            boy.move(0.f,-speed *elapsedtime.asSeconds());
+           
+            }
+            else{
+            if( Keyboard::isKeyPressed(Keyboard::Key::S))
+            {
+             boy.move(0.f,+speed*elapsedtime.asSeconds());
+             
+         }
+            }
+            if( Keyboard::isKeyPressed(Keyboard::Key::A))
+            {
+             boy.move(-speed*elapsedtime.asSeconds(), 0.f);
+             
+            }
+            else
+            {
+            if( Keyboard::isKeyPressed(Keyboard::Key::D))
+            {
+             boy.move(+speed*elapsedtime.asSeconds(), 0.f);
+             
+             }  
+            }
+
+            Vector2f coords = boy.getPosition();
+            cout<<coords.x<<"  "<<coords.y<<endl;
+
+
+         
+        windows.clear();
+        windows.draw(boy);
+        windows.display();
+        
+      
+    }
+
+}
